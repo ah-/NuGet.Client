@@ -1,9 +1,8 @@
 ﻿{
   "dependencies": {
-    "../../../NuGet.Core/NuGet.PackageManagement": { "target": "project" }
   },
   "frameworks": {
-    "net45": {}
+    "net451": {}
   },
   "runtimes": {
     "win-anycpu": {},
