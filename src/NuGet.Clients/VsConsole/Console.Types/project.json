@@ -1,6 +1,6 @@
 ﻿{
   "dependencies": {
-    "NuGet.PackageManagement": "3.5.0-*"
+    "../../../NuGet.Core/NuGet.PackageManagement": { "target": "project" }
   },
   "frameworks": {
     "net45": {}
