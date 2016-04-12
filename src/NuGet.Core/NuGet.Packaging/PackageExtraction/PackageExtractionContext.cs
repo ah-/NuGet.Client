@@ -1,12 +1,14 @@
 ﻿// Copyright (c) .NET Foundation. All rights reserved.
 // Licensed under the Apache License, Version 2.0. See License.txt in the project root for license information.
 
+using NuGet.Common;
 using NuGet.Packaging.PackageExtraction;
 
 namespace NuGet.Packaging
 {
     public class PackageExtractionContext
     {
+        public ILogger Logger { get; private set; }
         public bool CopySatelliteFiles { get; set; } = true;
 
         /// <summary>
@@ -18,5 +20,10 @@ namespace NuGet.Packaging
         public PackageSaveMode PackageSaveMode { get; set; } = PackageSaveMode.Defaultv2;
 
         public XmlDocFileSaveMode XmlDocFileSaveMode { get; set; } = PackageExtractionBehavior.XmlDocFileSaveMode;
+
+        public PackageExtractionContext(ILogger logger)
+        {
+            Logger = logger;
+        }
     }
 }

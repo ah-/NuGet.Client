@@ -25,7 +25,7 @@ namespace Test.Utility
             return FileConflictAction.IgnoreAll;
         }
 
-        public PackageExtractionContext PackageExtractionContext { get; set; } = new PackageExtractionContext();
+        public PackageExtractionContext PackageExtractionContext { get; set; } = new PackageExtractionContext(null);
 
         public ISourceControlManagerProvider SourceControlManagerProvider { get; set; }
 
