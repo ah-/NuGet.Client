@@ -10,7 +10,7 @@
     <AppDesignerFolder>Properties</AppDesignerFolder>
     <RootNamespace>NuGet.CommandLine</RootNamespace>
     <AssemblyName>NuGet</AssemblyName>
-    <TargetFrameworkVersion>v4.5</TargetFrameworkVersion>
+    <TargetFrameworkVersion>v4.6</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
     <RestoreNuGetPackages>true</RestoreNuGetPackages>
     <PlatformTarget>$(Platform)</PlatformTarget>

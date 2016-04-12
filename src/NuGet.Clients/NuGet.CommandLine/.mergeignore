@@ -21,6 +21,8 @@ System.Runtime.dll
 System.Runtime.Serialization.dll
 System.Security.dll
 System.ServiceModel.dll
+System.Text.Encoding.dll
+System.Threading.Tasks.dll
 System.Xml.dll
 System.Xml.Linq.dll
 WindowsBase.dll

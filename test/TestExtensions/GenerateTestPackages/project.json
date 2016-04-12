@@ -1,6 +1,6 @@
 ﻿{
   "dependencies": {
-    "NuGet.Core": "2.8.5"
+    "NuGet.Core": "2.8.6"
   },
   "frameworks": {
     "net451": {}

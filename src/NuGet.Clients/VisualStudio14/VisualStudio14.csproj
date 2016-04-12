@@ -1,9 +1,9 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
-<Project ToolsVersion="4.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+<Project ToolsVersion="12.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <Import Project="..\..\..\Build\Common.props" Condition="Exists('..\..\..\Build\Common.props')" />
   <PropertyGroup>
     <NoWarn>1762</NoWarn>
-    <TargetFrameworkVersion>v4.5</TargetFrameworkVersion>
+    <TargetFrameworkVersion>v4.6</TargetFrameworkVersion>
     <TargetFrameworkProfile />
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)' == 'Debug'">
@@ -42,8 +42,8 @@
     <Reference Include="Microsoft.Build">
       <HintPath>$(ProgramFiles)\Reference Assemblies\Microsoft\Framework\.NETFramework\v4.0\Microsoft.Build.dll</HintPath>
     </Reference>
-    <Reference Include="Microsoft.VisualStudio.ProjectSystem.V14Only">
-      <HintPath>..\..\..\lib\VS14\Microsoft.VisualStudio.ProjectSystem.V14Only.dll</HintPath>
+    <Reference Include="Microsoft.VisualStudio.ProjectSystem">
+      <HintPath>..\..\..\lib\VS15\Microsoft.VisualStudio.ProjectSystem.dll</HintPath>
       <Private>False</Private>
     </Reference>
     <Reference Include="System" />

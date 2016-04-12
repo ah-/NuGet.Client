@@ -1,7 +1,19 @@
 ﻿{
-  "dependencies": {},
+  "dependencies": {
+    "System.Collections.Concurrent": "4.0.11-*",
+    "System.Diagnostics.Tracing": "4.0.21-*",
+    "System.Dynamic.Runtime": "4.0.11-*",
+    "System.Reflection": "4.1.0-*",
+    "System.Resources.ResourceManager": "4.0.1-*",
+    "System.Threading": "4.0.11-*",
+    "System.Threading.Tasks": "4.0.11-*",
+    "System.Threading.Tasks.Parallel": "4.0.1-*",
+    "Microsoft.VisualStudio.Shell.14.0": "14.0.23107",
+    "Microsoft.VisualStudio.Shell.Interop": "7.10.6071",
+    "Microsoft.VisualStudio.Shell.Interop.8.0": "8.0.50727"
+  },
   "frameworks": {
-    "net45": {}
+    "net46": {}
   },
   "runtimes": {
     "win-anycpu": {},

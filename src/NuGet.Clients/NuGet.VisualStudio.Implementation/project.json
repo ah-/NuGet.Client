@@ -1,6 +1,8 @@
 ﻿{
   "dependencies": {
-    "NuGet.Resolver": "3.5.0-*",
+    "System.Collections": "4.0.11-*",
+    "System.Collections.Concurrent": "4.0.11-*",
+    "System.Globalization": "4.0.11-*",
     "Microsoft.VisualStudio.Shell.14.0": "14.0.23107",
     "Microsoft.VisualStudio.Shell.Interop": "7.10.6071",
     "Microsoft.VisualStudio.Shell.Interop.10.0": "10.0.30319",
@@ -9,13 +11,14 @@
     "Microsoft.VisualStudio.Shell.Interop.8.0": "8.0.50727",
     "Microsoft.VisualStudio.Shell.Interop.9.0": "9.0.30729",
     "Microsoft.VisualStudio.OLE.Interop": "7.10.6070",
-    "Microsoft.VisualStudio.Threading": "14.0.50702"
+    "Microsoft.VisualStudio.Threading": "15.0.20-*",
+    "NuGet.Resolver": "3.5.0-*"
   },
   "frameworks": {
-    "net45": {}
+    "net46": {}
   },
   "runtimes": {
-    "win-anycpu": {},
-    "win": {}
+    "win-anycpu": { },
+    "win": { }
   }
 }

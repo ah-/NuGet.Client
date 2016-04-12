@@ -1,5 +1,13 @@
-﻿{
+{
   "dependencies": {
+    "System.Collections.Concurrent": "4.0.11-*",
+    "System.Diagnostics.Tracing": "4.0.21-*",
+    "System.Dynamic.Runtime": "4.0.11-*",
+    "System.Reflection": "4.1.0-*",
+    "System.Resources.ResourceManager": "4.0.1-*",
+    "System.Threading": "4.0.11-*",
+    "System.Threading.Tasks": "4.0.11-*",
+    "System.Threading.Tasks.Parallel": "4.0.1-*",
     "Microsoft.VisualStudio.Shell.14.0": "14.0.23107",
     "Microsoft.VisualStudio.Shell.Immutable.10.0": "10.0.30319",
     "Microsoft.VisualStudio.Shell.Immutable.11.0": "11.0.50727",
@@ -11,14 +19,14 @@
     "Microsoft.VisualStudio.Shell.Interop.12.0": "12.0.30110",
     "Microsoft.VisualStudio.Shell.Interop.8.0": "8.0.50727",
     "Microsoft.VisualStudio.Shell.Interop.9.0": "9.0.30729",
-    "Microsoft.VisualStudio.Threading": "14.0.50702",
+    "Microsoft.VisualStudio.Threading": "15.0.20-*",
     "Microsoft.VisualStudio.OLE.Interop": "7.10.6070",
     "Microsoft.VisualStudio.TextManager.Interop": "7.10.6070",
     "Microsoft.VisualStudio.TextManager.Interop.10.0": "10.0.30319",
-    "Microsoft.VSSDK.BuildTools": "14.0.23107"
+    "Microsoft.VSSDK.BuildTools": "15.0.25201-*"
   },
   "frameworks": {
-    "net45": {}
+    "net46": {}
   },
   "runtimes": {
     "win-anycpu": {},

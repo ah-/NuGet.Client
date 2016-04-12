@@ -11,7 +11,7 @@ if ((Split-Path -Path $PSScriptRoot -Leaf) -eq "scripts") {
     $NuGetClientRoot = Split-Path -Path $NuGetClientRoot -Parent
 }
 
-$MSBuildExe = Join-Path ${env:ProgramFiles(x86)} 'MSBuild\14.0\Bin\msbuild.exe'
+$MSBuildExe = Join-Path ${env:ProgramFiles(x86)} 'MSBuild\15.0\Bin\msbuild.exe'
 $NuGetExe = Join-Path $NuGetClientRoot '.nuget\nuget.exe'
 $ILMerge = Join-Path $NuGetClientRoot 'packages\ILMerge.2.14.1208\tools\ILMerge.exe'
 $XunitConsole = Join-Path $NuGetClientRoot 'packages\xunit.runner.console.2.1.0\tools\xunit.console.x86.exe'
@@ -238,7 +238,7 @@ Function Restore-SolutionPackages{
     param(
         [Alias('path')]
         [string]$SolutionPath,
-        [ValidateSet(4, 12, 14)]
+        [ValidateSet(4, 12, 14, 15)]
         [int]$MSBuildVersion
     )
     $opts = , 'restore'
@@ -252,7 +252,7 @@ Function Restore-SolutionPackages{
         $opts += '-MSBuildVersion', $MSBuildVersion
     }
 
-    $opts += '-verbosity', 'quiet'
+    $opts += '-verbosity', 'detailed'
 
     Trace-Log "Restoring packages @""$NuGetClientRoot"""
     Trace-Log "$NuGetExe $opts"
@@ -265,7 +265,7 @@ Function Restore-SolutionPackages{
 # Restore nuget.core.sln projects
 Function Restore-XProjects {
 
-    $opts = 'restore', "src\NuGet.Core", "test\NuGet.Core.Tests", "test\NuGet.Core.FuncTests", "--verbosity", "minimal", "--infer-runtimes"
+    $opts = 'restore', "src\NuGet.Core", "test\NuGet.Core.Tests", "test\NuGet.Core.FuncTests", "--verbosity", "detailed", "--infer-runtimes"
 
     Trace-Log "Restoring packages for xprojs"
     Verbose-Log "$dotnetExe $opts"
@@ -453,14 +453,14 @@ Function Build-ClientsProjects {
     $solutionPath = Join-Path $NuGetClientRoot NuGet.Clients.sln
     if (-not $SkipRestore) {
         # Restore packages for NuGet.Tooling solution
-        Restore-SolutionPackages -path $solutionPath -MSBuildVersion 14
+        Restore-SolutionPackages -path $solutionPath -MSBuildVersion 15
     }
 
     # Build the solution
     $opts = , $solutionPath
     $opts += "/p:Configuration=$Configuration;ReleaseLabel=$ReleaseLabel;BuildNumber=$(Format-BuildNumber $BuildNumber)"
     if (-not $VerbosePreference) {
-        $opts += '/verbosity:minimal'
+        $opts += '/verbosity:detailed'
     }
 
     Trace-Log "$MSBuildExe $opts"
@@ -494,7 +494,7 @@ Function Test-ClientProject {
     )
     $opts = $testProj, "/t:RunTests", "/p:Configuration=$Configuration;RunTests=true"
     if (-not $VerbosePreference) {
-        $opts += '/verbosity:minimal'
+        $opts += '/verbosity:detailed'
     }
     Trace-Log "$MSBuildExe $opts"
     & $MSBuildExe $opts

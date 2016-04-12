@@ -6,7 +6,9 @@ using EnvDTE;
 using Microsoft.VisualStudio.Shell.Interop;
 using Microsoft.VisualStudio;
 using Microsoft.VisualStudio.ProjectSystem;
-using Microsoft.VisualStudio.ProjectSystem.Designers;
+//using Microsoft.VisualStudio.ProjectSystem.Designers;
+using Microsoft.VisualStudio.ProjectSystem.Properties;
+
 using Microsoft.VisualStudio.Shell;
 using MsBuildProject = Microsoft.Build.Evaluation.Project;
 using Task = System.Threading.Tasks.Task;
