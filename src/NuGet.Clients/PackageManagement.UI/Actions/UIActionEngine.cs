@@ -198,10 +198,13 @@ namespace NuGet.PackageManagement.UI
                     }
                 }
 
-                var accepted = await CheckLicenseAcceptanceAsync(uiService, results, token);
-                if (!accepted)
+                if (uiService.DisplayLicenseAcceptanceWindow)
                 {
-                    return;
+                    var accepted = await CheckLicenseAcceptanceAsync(uiService, results, token);
+                    if (!accepted)
+                    {
+                        return;
+                    }
                 }
 
                 if (!token.IsCancellationRequested)

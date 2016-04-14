@@ -13,6 +13,7 @@ using NuGet.Versioning;
 using NuGet.ProjectModel;
 using NuGet.Frameworks;
 using NuGet.Packaging.Core;
+using System.Diagnostics;
 
 namespace NuGet.Commands
 {
@@ -76,6 +77,9 @@ namespace NuGet.Commands
 
         private PackageArchiveReader BuildPackage(string path)
         {
+            Console.WriteLine("BuildPackage(" + path + ")");
+            Debugger.Break();
+
             string extension = Path.GetExtension(path);
 
             if (ProjectJsonPathUtilities.IsProjectConfig(path))
@@ -316,6 +320,8 @@ namespace NuGet.Commands
 
         private PackageArchiveReader BuildFromProjectFile(string path)
         {
+            Debugger.Break();
+
             if (String.IsNullOrEmpty(_packArgs.MsBuildDirectory.Value) || _createProjectFactory == null)
             {
                 _packArgs.Logger.LogError(Strings.Error_CannotFindMsbuild);

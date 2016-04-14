@@ -379,9 +379,10 @@ namespace NuGet.PackageManagement.VisualStudio
                                 AssemblyName assemblyName = AssemblyName.GetAssemblyName(fullPath);
 
                                 // Try to find the item for the assembly name
-                                MicrosoftBuildEvaluationProjectItem item = (from assemblyReferenceNode in buildProject.GetAssemblyReferences()
-                                    where AssemblyNamesMatch(assemblyName, assemblyReferenceNode.Item2)
-                                    select assemblyReferenceNode.Item1).FirstOrDefault();
+                                MicrosoftBuildEvaluationProjectItem item = (buildProject.GetAssemblyReferences()
+	                                .Where(
+		                                assemblyReferenceNode => AssemblyNamesMatch(assemblyName, assemblyReferenceNode.Item2))
+	                                .Select(assemblyReferenceNode => assemblyReferenceNode.Item1)).FirstOrDefault();
 
                                 if (item != null)
                                 {
