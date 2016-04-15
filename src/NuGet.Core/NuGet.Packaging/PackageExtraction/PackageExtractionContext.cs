@@ -23,7 +23,7 @@ namespace NuGet.Packaging
 
         public PackageExtractionContext(ILogger logger)
         {
-            Logger = logger;
+            Logger = logger ?? NullLogger.Instance;
         }
     }
 }

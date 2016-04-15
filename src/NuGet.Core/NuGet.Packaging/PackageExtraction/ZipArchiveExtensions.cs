@@ -72,16 +72,13 @@ namespace NuGet.Packaging
                 }
                 catch (ArgumentOutOfRangeException ex)
                 {
-                    if (logger != null)
-                    {
-                        string message = string.Format(
-                            CultureInfo.InvariantCulture,
-                            Strings.FailedFileTime,
-                            fileFullPath, // {0}
-                            ex.Message); // {1}
+                    string message = string.Format(
+                        CultureInfo.InvariantCulture,
+                        Strings.FailedFileTime,
+                        fileFullPath, // {0}
+                        ex.Message); // {1}
 
-                        logger.LogVerbose(message);
-                    }
+                    logger.LogVerbose(message);
                 }
             }
         }

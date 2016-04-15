@@ -454,6 +454,11 @@ namespace NuGet.Packaging
                 throw new ArgumentNullException(nameof(packagePathResolver));
             }
 
+            if (packageExtractionContext == null)
+            {
+                throw new ArgumentNullException(nameof(packageExtractionContext));
+            }
+
             var satelliteFilesCopied = Enumerable.Empty<string>();
 
             string runtimePackageDirectory;
