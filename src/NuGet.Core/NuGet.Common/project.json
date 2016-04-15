@@ -18,9 +18,6 @@
     "net45": {
       "frameworkAssemblies": {
         "Microsoft.CSharp": "",
-        "System": "",
-        "System.Core": "",
-        "System.Runtime": "",
         "System.IO.Compression": ""
       },
       "compilationOptions": {
