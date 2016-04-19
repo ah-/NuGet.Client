@@ -705,6 +705,7 @@ namespace NuGet.PackageManagement
 
                 // Step-1 : Get metadata resources using gatherer
                 var targetFramework = nuGetProject.GetMetadata<NuGetFramework>(NuGetProjectMetadataKeys.TargetFramework);
+                nuGetProjectContext.Log(NuGet.ProjectManagement.MessageLevel.Info, Environment.NewLine);
                 nuGetProjectContext.Log(NuGet.ProjectManagement.MessageLevel.Info, Strings.AttemptingToGatherDependencyInfoForMultiplePackages, projectName, targetFramework);
 
                 var allSources = new List<SourceRepository>(primarySources);
@@ -771,13 +772,7 @@ namespace NuGet.PackageManagement
                 }
 
                 // Remove packages that do not meet the constraints specified in the UpdateConstrainst
-                prunedAvailablePackages = PrunePackageTree.PruneByUpdateConstraints(prunedAvailablePackages, projectInstalledPackageReferences, resolutionContext.VersionConstraints);
-
-                // Verify that the target is allowed by packages.config
-                GatherExceptionHelpers.ThrowIfVersionIsDisallowedByPackagesConfig(primaryTargetIds, projectInstalledPackageReferences, prunedAvailablePackages);
-
-                // Remove versions that do not satisfy 'allowedVersions' attribute in packages.config, if any
-                prunedAvailablePackages = PrunePackageTree.PruneDisallowedVersions(prunedAvailablePackages, projectInstalledPackageReferences);
+                prunedAvailablePackages = PrunePackageTree.PruneByUpdateConstraints(prunedAvailablePackages, projectInstalledPackageReferences, resolutionContext.VersionConstraints);                
 
                 // Remove all but the highest packages that are of the same Id as a specified packageId
                 if (packageId != null)
@@ -786,7 +781,13 @@ namespace NuGet.PackageManagement
 
                     // And then verify that the installed package is not already of a higher version - this check here ensures the user get's the right error message
                     GatherExceptionHelpers.ThrowIfNewerVersionAlreadyReferenced(packageId, projectInstalledPackageReferences, prunedAvailablePackages);
-                }                
+                }
+
+                // Verify that the target is allowed by packages.config
+                GatherExceptionHelpers.ThrowIfVersionIsDisallowedByPackagesConfig(primaryTargetIds, projectInstalledPackageReferences, prunedAvailablePackages);
+
+                // Remove versions that do not satisfy 'allowedVersions' attribute in packages.config, if any
+                prunedAvailablePackages = PrunePackageTree.PruneDisallowedVersions(prunedAvailablePackages, projectInstalledPackageReferences);
 
                 // Remove packages that are of the same Id but different version than the primartTargets
                 prunedAvailablePackages = PrunePackageTree.PruneByPrimaryTargets(prunedAvailablePackages, primaryTargets);
@@ -1551,6 +1552,9 @@ namespace NuGet.PackageManagement
                 throw new ArgumentNullException(nameof(nuGetProjectContext));
             }
 
+            var stopWatch = new Stopwatch();
+            stopWatch.Start();
+
             // DNU: Find the closure before executing the actions
             var buildIntegratedProject = nuGetProject as BuildIntegratedNuGetProject;
             if (buildIntegratedProject != null)
@@ -1678,6 +1682,11 @@ namespace NuGet.PackageManagement
 
                 // Clear direct install
                 SetDirectInstall(null, nuGetProjectContext);
+
+                // calculate total time taken to execute all nuget actions
+                stopWatch.Stop();
+                nuGetProjectContext.Log(
+                    ProjectManagement.MessageLevel.Info, Strings.NugetActionsTotalTime, DatetimeUtility.ToReadableTimeFormat(stopWatch.Elapsed));
 
                 if (exceptionInfo != null)
                 {

@@ -151,9 +151,8 @@ namespace NuGet.Resolver
 
                     // solution found!
                     stopWatch.Stop();
-                    string type = string.Empty;
-                    var timeDiff = DatetimeUtility.ToReadableTimeFormat(stopWatch.Elapsed, out type);
-                    context.Log.LogMinimal(string.Format("Resolve dependency information took {0:0.##} {1}", timeDiff, type));
+                    context.Log.LogMinimal(
+                        string.Format(Strings.ResolverTotalTime, DatetimeUtility.ToReadableTimeFormat(stopWatch.Elapsed)));
                     return sortedSolution.ToArray();
                 }
             }

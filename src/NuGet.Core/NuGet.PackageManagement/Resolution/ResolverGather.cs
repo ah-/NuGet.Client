@@ -13,6 +13,7 @@ using NuGet.Frameworks;
 using NuGet.Packaging.Core;
 using NuGet.Protocol.Core.Types;
 using NuGet.Versioning;
+using System.Globalization;
 
 namespace NuGet.PackageManagement
 {
@@ -79,7 +80,7 @@ namespace NuGet.PackageManagement
         private async Task<HashSet<SourcePackageDependencyInfo>> GatherAsync(CancellationToken token)
         {
             // preserve start time of gather api
-            Stopwatch stopWatch = new Stopwatch();
+            var stopWatch = new Stopwatch();
             stopWatch.Start();
             token.ThrowIfCancellationRequested();
 
@@ -221,16 +222,15 @@ namespace NuGet.PackageManagement
                     throw new InvalidOperationException(message);
                 }
             }
-            // calculate total time taken to gather all packages as well as with each soource
-            var type = string.Empty;
+            // calculate total time taken to gather all packages as well as with each source
             stopWatch.Stop();
-            var timeDiff = DatetimeUtility.ToReadableTimeFormat(stopWatch.Elapsed, out type);
-            _context.Log.LogMinimal(string.Format("Gather dependency information took {0:0.##} {1}", timeDiff, type));
-            _context.Log.LogDebug("Below is the summary of time taken to gather dependencies source-wise :");
+            _context.Log.LogMinimal(
+                string.Format(Strings.GatherTotalTime, DatetimeUtility.ToReadableTimeFormat(stopWatch.Elapsed)));
+            _context.Log.LogDebug("Summary of time taken to gather dependencies per source :");
             foreach(var key in _timeTaken.Keys)
             {
-                timeDiff = DatetimeUtility.ToReadableTimeFormat(_timeTaken[key], out type);
-                _context.Log.LogDebug(string.Format("{0} - {1:0.##} {2}", key, timeDiff, type));
+                _context.Log.LogDebug(
+                    string.Format("{0}\t-\t{1}", key, DatetimeUtility.ToReadableTimeFormat(_timeTaken[key])));
             }
             return combinedResults;
         }
@@ -405,7 +405,7 @@ namespace NuGet.PackageManagement
             if (_cache != null && cacheResult.HasEntry)
             {
                 // Use cached packages
-                _context.Log.LogDebug(string.Format("Package {0} with source {1} gathered from cache.", request.Package.Id, request.Source.Source.PackageSource.Name));
+                _context.Log.LogDebug(string.Format("Package {0} from source {1} gathered from cache.", request.Package.Id, request.Source.Source.PackageSource.Name));
                 packages.AddRange(cacheResult.Packages);
             }
             else

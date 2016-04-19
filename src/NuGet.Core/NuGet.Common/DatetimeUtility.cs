@@ -14,13 +14,12 @@ namespace NuGet.Common
         /// take timespan n return in appropriate unit like ms, or seconds, or minutes, or hours
         /// </summary>
         /// <param name="time">timespan</param>
-        /// <param name="type">time measuring unit</param>
         /// <returns></returns>
-        public static double ToReadableTimeFormat(TimeSpan time, out string type)
+        public static string ToReadableTimeFormat(TimeSpan time)
         {
             // initially define as hours
             double result = time.TotalHours;
-            type = "hr";
+            string type = "hr";
 
             if (time.TotalSeconds < 1)
             {
@@ -38,7 +37,7 @@ namespace NuGet.Common
                 type = "min"; // minutes
             }
 
-            return result;
+            return string.Format("{0:0.##} {1}",result,type);
         }
     }
 }
