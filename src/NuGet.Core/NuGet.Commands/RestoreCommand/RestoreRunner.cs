@@ -114,6 +114,49 @@ namespace NuGet.Commands
             return restoreSummaries;
         }
 
+        private static void RunRestoreScript(ILogger log, string workingDirectory, string script)
+        {
+            var tmp = script.Split(' ');
+            var psi = new ProcessStartInfo
+            {
+                // Hacky, do escaping like dotnet cli
+                FileName = tmp.First(),
+                Arguments = string.Join(" ", tmp.Skip(1)),
+                //RedirectStandardError = true,
+                //RedirectStandardOutput = true
+            };
+
+            //_stdOut = new StreamForwarder();
+            //_stdErr = new StreamForwarder();
+            var process = new Process
+            {
+                StartInfo = psi
+            };
+            process.StartInfo.WorkingDirectory = workingDirectory;
+
+            log.LogVerbose($"Running {process.StartInfo.FileName} {process.StartInfo.Arguments}");
+
+            process.EnableRaisingEvents = true;
+            process.Start();
+
+            log.LogVerbose($"Process ID: {process.Id}");
+
+            //var threadOut = _stdOut.BeginRead(process.StandardOutput);
+            //var threadErr = _stdErr.BeginRead(process.StandardError);
+
+            process.WaitForExit();
+            //threadOut.Join();
+            //threadErr.Join();
+        }
+
+        public static IEnumerable<V> GetOrEmpty<K, V>(this IDictionary<K, IEnumerable<V>> self, K key)
+        {
+            IEnumerable<V> val;
+            return !self.TryGetValue(key, out val)
+                ? Enumerable.Empty<V>()
+                : val;
+        }
+
         private static async Task<RestoreSummary> Execute(RestoreSummaryRequest summaryRequest)
         {
             var log = summaryRequest.Request.Log;
@@ -122,6 +165,12 @@ namespace NuGet.Commands
                     CultureInfo.CurrentCulture,
                     Strings.Log_ReadingProject,
                     summaryRequest.InputPath));
+
+            var project = summaryRequest.Request.Project;
+            foreach (var script in project.Scripts.GetOrEmpty("prerestore"))
+            {
+                RunRestoreScript(log, project.BaseDirectory, script);
+            }
 
             // Run the restore
             var sw = Stopwatch.StartNew();
@@ -162,6 +211,11 @@ namespace NuGet.Commands
                         CultureInfo.CurrentCulture,
                         Strings.Log_RestoreFailed,
                         sw.ElapsedMilliseconds));
+            }
+
+            foreach (var script in project.Scripts.GetOrEmpty("postrestore"))
+            {
+                RunRestoreScript(log, project.BaseDirectory, script);
             }
 
             // Build the summary
